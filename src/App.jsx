@@ -51,9 +51,32 @@ function App() {
             {
               x: dataX,
               y: dataY,
-              type: 'scatter'
+              type: 'scatter',
+              marker: {color: '#1B9E77'}
             }
           ]}
+          layout={
+            {
+              // template: 'plotly_dark',
+              plot_bgcolor: '#0F2027',
+              paper_bgcolor: '#0F2027',
+              color: 'green',
+              title: {text: 'text', font: {color: '#FFFFFF'} /*plot_name*/},
+              xaxis: {
+                  title: {
+                      text: 'textX' //x_axis_name
+                  },
+                  color: "#FFFFFF"
+              },
+              yaxis: {
+                  title: {
+                      text: 'textY' //y_axis_name
+                  },
+                  color: "#FFFFFF",
+                  range: [0, 10],
+              }
+            } 
+          }
         />
       </main>
     </div>
