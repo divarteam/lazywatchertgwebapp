@@ -25,7 +25,7 @@ function App() {
     // }
     // const newDataX = data.map(d => d.x)
     // const newDataY = data.map(d => d.y)
-    const res = await axios.get('https://api.lazywatcher.divarteam.ru/v1/metric?access_id=1&metric_type=check_db_size')
+    const res = await axios.get('https://api.lazywatcher.divarteam.ru/v1/metric?access_id=1&metric_type=check_server_size')
     const json = res.data
     console.log(json)
     setData(json);
@@ -62,7 +62,7 @@ function App() {
       <Header />
       <main>
         {/* {ctr} */}
-        <p>{JSON.stringify(data)}</p>
+        {/* <p>{JSON.stringify(data)}</p> */}
         <Plot
           data={[
             {
@@ -78,16 +78,16 @@ function App() {
               plot_bgcolor: '#0F2027',
               paper_bgcolor: '#0F2027',
               color: 'green',
-              title: {text: 'text', font: {color: '#FFFFFF'} /*plot_name*/},
+              title: {text: data ? data?.title : firstData?.title, font: {color: '#FFFFFF'} /*plot_name*/},
               xaxis: {
                   title: {
-                      text: 'textX' //x_axis_name
+                      text: data ? data?.x_title : firstData?.x_title, //x_axis_name
                   },
                   color: "#FFFFFF"
               },
               yaxis: {
                   title: {
-                      text: 'textY' //y_axis_name
+                    text: data ? data?.y_title : firstData?.y_title, //y_axis_name
                   },
                   color: "#FFFFFF",
                   // range: [0, 100],
