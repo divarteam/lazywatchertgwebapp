@@ -55,7 +55,7 @@ function App() {
     //   console.log(json)
     //   setData(json);
     // })()
-    setTimeout(upd, 15 * 1000)
+    setTimeout(upd, 3 * 1000)
     //console.log(data)
   }, [data])
 
@@ -63,11 +63,13 @@ function App() {
     <div className='App'>
       <Header />
       <main>
+        <h2>Статистика в реальном времени</h2>
         {/* {ctr} */}
         {/* <p>{JSON.stringify(searchParams)}</p> */}
-        <p>{searchParams.get('access_id')}</p>
-        <p>{searchParams.get('metric_type')}</p>
+        {/* <p>{searchParams.get('access_id')}</p> */}
+        {/* <p>{searchParams.get('metric_type')}</p> */}
         <Plot
+          // style={{width: '100%'}}
           data={[
             {
               x: data ? data?.x : firstData?.x,
@@ -79,6 +81,8 @@ function App() {
           layout={
             {
               // template: 'plotly_dark',
+              width: 400,
+              height: 300,
               plot_bgcolor: '#0F2027',
               paper_bgcolor: '#0F2027',
               color: 'green',
@@ -87,13 +91,15 @@ function App() {
                   title: {
                       text: data ? data?.x_title : firstData?.x_title, //x_axis_name
                   },
-                  color: "#FFFFFF"
+                  color: "#FFFFFF",
+                  fixedrange: true
               },
               yaxis: {
                   title: {
                     text: data ? data?.y_title : firstData?.y_title, //y_axis_name
                   },
                   color: "#FFFFFF",
+                  fixedrange: true
                   // range: [0, 100],
               }
             } 
