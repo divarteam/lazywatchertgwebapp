@@ -33,7 +33,7 @@ function App() {
   }, [])
  
   useEffect(() => {
-    setTimeout(upd, 3 * 1000)
+    setTimeout(upd, parseInt(1.5 * 1000))
   }, [data])
 
   return (
