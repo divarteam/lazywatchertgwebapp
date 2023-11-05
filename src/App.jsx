@@ -4,12 +4,14 @@ import viteLogo from '/vite.svg'
 import './App.css'
 import Header from './components/Header/Header'
 import { useTelegram } from './hooks/useTelegram'
+import { useSearchParams } from 'react-router-dom'
 import Plot from 'react-plotly.js'
 import axios from 'axios'
 // import { redraw } from 'plotly.js'
 
 function App() {
   const {onToggleButton, tg} = useTelegram();
+  const [searchParams, setSearchParams] = useSearchParams()
   const [firstData, setFirstData] = useState(null)
   const [data, setData] = useState(null)
 
@@ -25,7 +27,7 @@ function App() {
     // }
     // const newDataX = data.map(d => d.x)
     // const newDataY = data.map(d => d.y)
-    const res = await axios.get('https://api.lazywatcher.divarteam.ru/v1/metric?access_id=1&metric_type=check_server_size')
+    const res = await axios.get(`https://api.lazywatcher.divarteam.ru/v1/metric?access_id=${searchParams.get('access_id')}&metric_type=${searchParams.get('metric_type')}`)
     const json = res.data
     console.log(json)
     setData(json);
@@ -40,7 +42,7 @@ function App() {
     tg.ready();
 
     (async () => {
-      const res = await axios.get('https://api.lazywatcher.divarteam.ru/v1/metric?access_id=1&metric_type=check_server_size')
+      const res = await axios.get(`https://api.lazywatcher.divarteam.ru/v1/metric?access_id=${searchParams.get('access_id')}&metric_type=${searchParams.get('metric_type')}`)
       const json = res.data
       setFirstData(json)
     })()
@@ -62,7 +64,9 @@ function App() {
       <Header />
       <main>
         {/* {ctr} */}
-        {/* <p>{JSON.stringify(data)}</p> */}
+        {/* <p>{JSON.stringify(searchParams)}</p> */}
+        <p>{searchParams.get('access_id')}</p>
+        <p>{searchParams.get('metric_type')}</p>
         <Plot
           data={[
             {
