@@ -5,52 +5,69 @@ import './App.css'
 import Header from './components/Header/Header'
 import { useTelegram } from './hooks/useTelegram'
 import Plot from 'react-plotly.js'
+import axios from 'axios'
 // import { redraw } from 'plotly.js'
 
 function App() {
   const {onToggleButton, tg} = useTelegram();
-  const [data, setData] = useState([])
+  const [firstData, setFirstData] = useState(null)
+  const [data, setData] = useState(null)
 
-  const [dataX, setDataX] = useState()
-  const [dataY, setDataY] = useState()
+  // const [dataX, setDataX] = useState()
+  // const [dataY, setDataY] = useState()
 
-  const [ctr, setCtr] = useState(1);
+  // const [ctr, setCtr] = useState(1);
   
-  const foo = () => {
-    const newData = [...data, {x: ctr, y: parseInt(10*Math.random())}]
-    if (newData.length > 25) {
-      newData.splice(0, 1)
-    }
-    const newDataX = data.map(d => d.x)
-    const newDataY = data.map(d => d.y)
-    setData(newData);
-    setDataX(newDataX)
-    setDataY(newDataY)
+  const upd = async () => {
+    // const newData = [...data, {x: ctr, y: parseInt(101*Math.random())}]
+    // if (newData.length > 25) {
+    //   newData.splice(0, 1)
+    // }
+    // const newDataX = data.map(d => d.x)
+    // const newDataY = data.map(d => d.y)
+    const res = await axios.get('https://api.lazywatcher.divarteam.ru/v1/metric?access_id=1&metric_type=check_db_size')
+    const json = res.data
+    console.log(json)
+    setData(json);
+    // setDataX(newDataX)
+    // setDataY(newDataY)
 
-    setCtr(ctr+1)
+    // setCtr(ctr+1)
     // setTimeout(foo, 1000)
   }
 
   useEffect(() => {
     tg.ready();
+
+    (async () => {
+      const res = await axios.get('https://api.lazywatcher.divarteam.ru/v1/metric?access_id=1&metric_type=check_server_size')
+      const json = res.data
+      setFirstData(json)
+    })()
   }, [])
  
   useEffect(() => {
-    setTimeout(foo, 50)
-    console.log(ctr)
-  }, [ctr])
+    // (async() => {
+    //   const res = await axios.get('https://api.lazywatcher.divarteam.ru/v1/metric?access_id=1&metric_type=check_server_size')
+    //   const json = res.data
+    //   console.log(json)
+    //   setData(json);
+    // })()
+    setTimeout(upd, 15 * 1000)
+    //console.log(data)
+  }, [data])
 
   return (
     <div className='App'>
       <Header />
       <main>
-        {ctr}
+        {/* {ctr} */}
         <p>{JSON.stringify(data)}</p>
         <Plot
           data={[
             {
-              x: dataX,
-              y: dataY,
+              x: data ? data?.x : firstData?.x,
+              y: data ? data?.y : firstData?.y,
               type: 'scatter',
               marker: {color: '#1B9E77'}
             }
@@ -73,7 +90,7 @@ function App() {
                       text: 'textY' //y_axis_name
                   },
                   color: "#FFFFFF",
-                  range: [0, 10],
+                  // range: [0, 100],
               }
             } 
           }
