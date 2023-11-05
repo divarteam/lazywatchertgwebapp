@@ -67,7 +67,7 @@ function App() {
               plot_bgcolor: '#0F2027',
               paper_bgcolor: '#0F2027',
               color: 'green',
-              title: {text: data ? data?.title : firstData?.title, font: {color: '#FFFFFF'}},
+              title: {text: data ? data?.title : firstData?.title, font: {color: '#FFFFFF'}, x: 0.03},
               xaxis: {
                   title: {
                       text: data ? data?.x_title : firstData?.x_title,
