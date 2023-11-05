@@ -44,6 +44,11 @@ function App() {
         {/* <p>{searchParams.get('access_id')}</p> */}
         {/* <p>{searchParams.get('metric_type')}</p> */}
         <Plot
+          config={{
+            displaylogo: false,
+            responsive: true,
+          }}
+          // style={{width: '100%'}}
           data={[
             {
               x: data ? data?.x : firstData?.x,
@@ -55,8 +60,10 @@ function App() {
           layout={
             {
               // template: 'plotly_dark',
-              width: 400,
-              height: 300,
+              // width: 400,
+              // autosize: true,
+              // width: auto,
+              height: 400,
               plot_bgcolor: '#0F2027',
               paper_bgcolor: '#0F2027',
               color: 'green',
